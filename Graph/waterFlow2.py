@@ -7,6 +7,8 @@ class Solution:
         ans = []
         for x, y in [(r - 1, c), (r, c - 1), (r + 1, c), (r, c + 1)]:
             if (0 <= x <= n - 1) and (0 <= y <= m - 1):
+                # height which is greater from there only
+                # water will flow into the ocean
                 if ht[x][y] >= ht[r][c]:
                     ans.append((x, y))
         return ans
@@ -27,21 +29,18 @@ class Solution:
                     pacific.append((r, c))
                     vis_pacific.add((r, c))
 
-        while atlantic:
-            x, y = atlantic.popleft()
-            for (nr, nc) in self.neighbors(x, y, n, m, ht):
-                if (nr, nc) not in vis_atlantic:
-                    vis_atlantic.add((nr, nc))
-                    atlantic.append((nr, nc))
-
-        while pacific:
-            x, y = pacific.popleft()
-            for (nr, nc) in self.neighbors(x, y, n, m, ht):
-                if (nr, nc) not in vis_pacific:
-                    vis_pacific.add((nr, nc))
-                    pacific.append((nr, nc))
+        self.ocean_traversal(atlantic, ht, m, n, vis_atlantic)
+        self.ocean_traversal(pacific, ht, m, n, vis_pacific)
 
         return len(vis_atlantic.intersection(vis_pacific))
+
+    def ocean_traversal(self, ocean, ht, m, n, vis_ocean):
+        while ocean:
+            x, y = ocean.popleft()
+            for (nr, nc) in self.neighbors(x, y, n, m, ht):
+                if (nr, nc) not in vis_ocean:
+                    vis_ocean.add((nr, nc))
+                    ocean.append((nr, nc))
 
 
 if __name__ == '__main__':

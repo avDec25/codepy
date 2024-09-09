@@ -26,7 +26,7 @@ class Solution:
                 if nr == R or nc == C:
                     reached_arabian = True
 
-                if (reached_arabian and reached_indian):
+                if reached_arabian and reached_indian:
                     return True
 
                 if (0 <= nr <= R - 1 and 0 <= nc <= C - 1) \
