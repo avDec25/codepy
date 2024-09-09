@@ -9,7 +9,7 @@ def maxUtil(node):
     if node is None:
         return 0
 
-    l_mx = maxUtil(node.left)   # left is solved: max path sum on left
+    l_mx = maxUtil(node.left)  # left is solved: max path sum on left
     r_mx = maxUtil(node.right)  # right is solved: max path sum on right
 
     # should take max of two and the root, or just the root itself is max
@@ -26,11 +26,25 @@ def maxUtil(node):
     return mx_single
 
 
+# def findMaxPathSum(node):
+#     maxUtil.ans = float("-inf")
+#     maxUtil(node)
+#     return maxUtil.ans
 
 def findMaxPathSum(node):
-    maxUtil.ans = float("-inf")
-    maxUtil(node)
-    return maxUtil.ans
+    findMaxPathSum.msum = float("-inf")
+
+    def mps(root):
+        if root is None:
+            return 0
+        ls = mps(root.left)
+        rs = mps(root.right)
+        local_mx = max(root.val, root.val + max(ls, rs))
+        findMaxPathSum.msum = max(findMaxPathSum.msum, local_mx, ls + rs + root.val)
+        return root.val + max(ls, rs)
+
+    mps(node)
+    return findMaxPathSum.msum
 
 
 def maxPathSumNoRecursion(root):
@@ -59,7 +73,7 @@ def maxPathSumNoRecursion(root):
             # meaning max-path-sum in whole tree
             # in contrast to: just left path max, or right path max
             mx_sum = max(mx_sum, node.val + max(0, l_sum) + max(0, r_sum))
-                                          # ^should we take left_sum or not
+            # ^should we take left_sum or not
 
             # local updates
             mx_child_sum = max(l_sum, r_sum)

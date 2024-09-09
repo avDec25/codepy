@@ -15,7 +15,8 @@ def lca(root, n1, n2):
     if n1 <= root.val <= n2:
         return root
 
-    if root.val > n2:
+    if root.val > n2: # means both n1 and n2 are smaller than root,
+                      # go to Left then you will find
         return lca(root.left, n1, n2)
     if root.val < n1:
         return lca(root.right, n1, n2)

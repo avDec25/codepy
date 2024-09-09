@@ -19,7 +19,8 @@ def dfsMaxDepth(node):
 
 def bfsMaxDepth(node):
     if not node: return 0
-    q = deque([node])
+    q = deque()
+    q.append(node)
     h = 0
 
     while q:
