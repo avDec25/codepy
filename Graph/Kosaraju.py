@@ -15,7 +15,7 @@ def kosarajuPass1(V, adj):
     return stk
 
 
-def kosarajuPass2(stkFT, adj):
+def kosarajuPass2(stkFT, adj):  # Stacked by finish time
     ans = []
     visited = set()
     for v in stkFT[::-1]:
