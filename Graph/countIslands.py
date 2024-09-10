@@ -24,6 +24,7 @@ class Solution:
                 if (r, c) not in visited and a[r][c] == 1:
                     ans += 1
                     q.append((r, c))
+                    visited.add((r,c))
                     while q:
                         u, v = q.pop()
                         for nr, nc in self.neighbors(u, v, R, C, a):

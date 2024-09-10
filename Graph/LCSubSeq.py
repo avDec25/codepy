@@ -17,20 +17,20 @@ class Solution:
         visited = set()
         q = deque()
         for e in a:
-            data = 0
+            seq_len = 0
             if e not in visited:
                 q.append(e)
                 visited.add(e)
-                data = data + 1
+                seq_len = seq_len + 1
                 while q:
                     popped = q.popleft()
                     for neighbour in adj[popped]:
                         if neighbour not in visited:
-                            q.append(neighbour)
                             visited.add(neighbour)
-                            data = data + 1
+                            q.append(neighbour)
+                            seq_len = seq_len + 1
 
-                lcss = max(lcss, data)
+                lcss = max(lcss, seq_len)
 
         return lcss
 

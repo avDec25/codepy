@@ -16,13 +16,14 @@ class Solution:
     def minThrow(self, N, arr):
         moves = [-1] * 31
         for i in range(0, N*2, 2):
-            moves[arr[i]] = arr[i + 1]
+            if arr[i] < arr[i+1]:
+                moves[arr[i]] = arr[i + 1]
 
         q = deque()
-        q.append((1, 0))
+        q.append((0, 0))
 
         visited = set()
-        visited.add(1)
+        visited.add(0)
 
         ans = float('inf')
         while q:
@@ -37,5 +38,6 @@ class Solution:
 
 
 N = 3
-arr = [21, 8, 13, 29, 16, 26]
+# arr = [21, 8, 13, 29, 16, 26]
+arr = [3, 22, 5, 8, 11, 26, 20, 29, 17, 4, 19, 7, 27, 1, 29, 9]
 print(Solution().minThrow(N, arr))

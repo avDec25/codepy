@@ -37,9 +37,6 @@ def findSCC(V, adj, nodeFT, doPrint):
             currTime += 1
 
 
-
-
-
 if __name__ == '__main__':
     V = 6
     adj = [[] for _ in range(V)]
