@@ -14,6 +14,7 @@ def stream_median(a):
         heappush(min_heap, -heappop(max_heap))
 
         # prevent next time addition of element making the len diff by 2
+        # we keep the left one i.e. the max heap as bigger always or equal
         if len(max_heap) < len(min_heap):
             heappush(max_heap, -heappop(min_heap))
 
