@@ -9,6 +9,7 @@ class Solution:
             for j in range(i - 1, -1, -1):
                 if h[j] >= h[i]:
                     width += 1
+
                 else:
                     break
 
