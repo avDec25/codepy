@@ -10,8 +10,11 @@ class Solution:
 
     def minimumTime(self, time: List[int], totalTrips: int) -> int:
         left = 1
-        right = max(time) * totalTrips
-        ans = left
+        # although, worst case is max(time) * total trips
+        # because question asks for minimum time to do all trips
+        # So, upper bound = min(time) * totalTrips
+        # as upper bound comes from the fastest bus
+        right = min(time) * totalTrips
         while left < right:
             mid = left + (right - left) // 2
             if self.willComplete(time, mid, totalTrips):
