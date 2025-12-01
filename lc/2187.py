@@ -9,7 +9,7 @@ class Solution:
         return ans >= totalTrips
 
     def minimumTime(self, time: List[int], totalTrips: int) -> int:
-        left = min(time) * totalTrips
+        left = 1
         right = max(time) * totalTrips
         ans = left
         while left < right:
