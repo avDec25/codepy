@@ -12,6 +12,8 @@ class Solution:
             if partner in seen and i != seen[partner]:
                 return [i, seen[partner]]
 
+        return []
+
 
 
 nums = [3, 2, 4]

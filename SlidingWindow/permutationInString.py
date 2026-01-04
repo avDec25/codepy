@@ -1,26 +1,32 @@
-import collections
-
-
 class Solution:
+    # True when: s2 contains a permutation of s1
     def checkInclusion(self, s1: str, s2: str) -> bool:
-        s2n = len(s2)
-        s1n = len(s1)
+        s1_len = len(s1)
+        s2_len = len(s2)
 
-        if s2n < s1n:
+        # means s2 cannot contain s1
+        if s2_len < s1_len:
             return False
 
-        freq = collections.Counter(s1)
+        s1_window = [0] * 26
+        s2_window = [0] * 26
 
-        for i in range(s2n):
-            counter = collections.Counter(s2[i:i+len(s1)])
-            if len(counter.keys()) == len(freq.keys()):
-                failed = False
-                for key in freq.keys():
-                    if counter[key] != freq[key]:
-                        failed = True
-                        break
-                if not failed:
-                    return True
+        # create first window: same size as s1
+        for index in range(s1_len):
+            s1_window[ord(s1[index]) - ord('a')] += 1
+            s2_window[ord(s2[index]) - ord('a')] += 1
+
+        if s1_window == s2_window:
+            return True
+
+        # slide the fixed size window
+        for index in range(s2_len - s1_len):
+            s2_window[ord(s2[index + s1_len]) - ord('a')] += 1
+            s2_window[ord(s2[index]) - ord('a')] -= 1
+
+            if s1_window == s2_window:
+                return True
+
         return False
 
 
