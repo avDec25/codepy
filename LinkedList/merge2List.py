@@ -42,6 +42,7 @@ class Solution:
             l2.next = self.mergeTwoLists(l1, l2.next)
             return l2
 
+
 list1 = [1, 2, 4]
 list2 = [1, 3, 4]
 print(Solution().mergeTwoLists(create_linked_list(list1), create_linked_list(list2)))

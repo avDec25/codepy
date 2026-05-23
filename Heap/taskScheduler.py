@@ -1,19 +1,13 @@
-import collections
-import heapq
 from typing import List
-
+from collections import Counter
 
 class Solution:
     def leastInterval(self, tasks: List[str], n: int) -> int:
-        counter = collections.Counter(tasks)
-        mx_freq = max(counter.values())
-        mx_freq_counts = sum(1 for count in counter.values() if count == mx_freq)
-
-        heap = []
-        for key in counter.keys():
-            heapq.heappush(heap, (counter[key], key))
-
-        while len(heap) > 1:
+        tasks_count = Counter(tasks)
+        mx_freq = max(tasks_count.values())
+        mx_freq_count = sum(1 for count in tasks_count.values() if count == mx_freq)
+        formula_result = (mx_freq-1) * (n+1) + mx_freq_count
+        return max(formula_result, len(tasks))
 
 
 
