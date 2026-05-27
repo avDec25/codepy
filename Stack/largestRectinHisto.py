@@ -3,10 +3,11 @@ from typing import List
 
 class Solution:
     def largestRectangleArea(self, h: List[int]) -> int:
-        stk = [(0, h[0])]
+        stk = []
         area_max = 0
         for i, ht in enumerate(h):
             start = i
+            print(start, stk)
             while stk and h[i] < stk[-1][1]:
                 pi, ph = stk.pop()
                 area_max = max(area_max, (i - pi) * ph)
