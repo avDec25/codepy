@@ -12,10 +12,10 @@ class Solution:
             s = intervals[i][0]
             e = intervals[i][1]
             while i < len(intervals) - 1 and e >= intervals[i + 1][0]:
-                e = max(e, intervals[i + 1][1])
                 i += 1
+                e = max(e, intervals[i][1])
             ans.append([s, e])
-            i += 1
+            i += 1  # we have already processed i+1 here, so safe to do this
 
         return ans
 
