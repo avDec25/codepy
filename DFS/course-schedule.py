@@ -29,9 +29,9 @@ class Solution:
 
         for i in range(numCourses):
             if has_cycle(i):
-                return False
+                return False # response that cannot finish courses
 
-        return True
+        return True # response that can finish courses
 
     # khan's algorithm: topological sorting
     def canFinish(self, numCourses: int, prerequisites: List[List[int]]) -> bool:
