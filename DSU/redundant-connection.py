@@ -11,15 +11,14 @@ class UnionFind:
             self.parent[x] = self.find(self.parent[x])
         return self.parent[x]
 
+    # Union by Size
     def union(self, x, y):
         rx, ry = self.find(x), self.find(y)
-
         if rx == ry:
             return False
 
         if self.size[rx] < self.size[ry]:
             rx, ry = ry, rx
-
         self.parent[ry] = rx
         self.size[rx] += self.size[ry]
         return True
@@ -32,19 +31,16 @@ class UnionFind:
 
 
 class Solution:
-    def countComponents(self, n: int, edges: List[List[int]]) -> int:
+    def findRedundantConnection(self, edges: List[List[int]]) -> List[int]:
+        n = len(edges)
         uf = UnionFind(n)
-        components = n
         for u, v in edges:
-            if uf.union(u, v):
-                components -= 1
+            if not uf.union(u-1, v-1):
+                return [u, v]
+        return []
 
-        return components
+edges = [[1, 2], [1, 3], [2, 3]]
+print(Solution().findRedundantConnection(edges))
 
-
-n = 5
-edges = [[0,1],[1,2],[3,4]] # 2
-print(Solution().countComponents(n, edges))
-n = 5
-edges = [[0,1],[1,2],[2,3],[3,4]] # 1
-print(Solution().countComponents(n, edges))
+edges = [[1, 2], [2, 3], [3, 4], [1, 4], [1, 5]]
+print(Solution().findRedundantConnection(edges))

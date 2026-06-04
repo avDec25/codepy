@@ -35,14 +35,14 @@ class Solution:
     def findCircleNum(self, isConnected: List[List[int]]) -> int:
         n = len(isConnected)
         uf = UnionFind(n)
+        components = n
         for i in range(n):
-            for j in range(i+1, n):
+            for j in range(i + 1, n):
                 if isConnected[i][j] == 1:
-                    uf.union(i, j)
-        components = set()
-        for i in range(n):
-            components.add(uf.find(i))
-        return len(components)
+                    if uf.union(i, j):
+                        components -= 1
+
+        return components
 
 
 isConnected = [
