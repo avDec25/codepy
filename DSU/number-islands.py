@@ -34,26 +34,25 @@ class Solution:
     def numIslands(self, grid: List[List[str]]) -> int:
         rows = len(grid)
         cols = len(grid[0])
-        uf = UnionFind((rows*cols) + 1)
+        uf = UnionFind((rows * cols) + 1)
+        islands = 0
 
         for r in range(rows):
             for c in range(cols):
-                id = r * cols + c
                 if grid[r][c] == "1":
-                    # because elements will be neighbors if top and left are also 1
-                    # we are moving front and down, so no need to check them
-                    if r > 0 and grid[r - 1][c] == "1":
-                        uf.union(id, (r - 1) * cols + c)
-                    if c > 0 and grid[r][c - 1] == "1":
-                        uf.union(id, r * cols + c - 1)
-
-        islands = set()
-        for r in range(rows):
-            for c in range(cols):
-                if grid[r][c] == "1":
-                    islands.add(uf.find(r*cols+c))
-
-        return len(islands)
+                    islands += 1
+                    current = r*cols+c
+                    for nx, ny in [
+                        (r+1, c),
+                        (r-1, c),
+                        (r, c+1),
+                        (r, c-1),
+                    ]:
+                        if 0 <= nx < rows and 0 <= ny < cols and grid[nx][ny] == "1":
+                            neighbor = nx*cols+ny
+                            if uf.union(current, neighbor):
+                                islands -= 1
+        return islands
 
 
 
