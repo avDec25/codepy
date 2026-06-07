@@ -4,7 +4,7 @@ from typing import List
 
 class Solution:
     def equationsPossible(self, equations: List[str]) -> bool:
-        parent = defaultdict(str)
+        parent = {}
         size = defaultdict(int)
 
         def find(x):
