@@ -11,20 +11,19 @@ class Solution:
                 return mid
             elif a[lo] <= a[mid]:  # left side already sorted
                 if a[lo] <= target <= a[mid]:
-                    hi -= 1
+                    hi = mid - 1
                 else:
-                    lo += 1
+                    lo = mid + 1
             else:
                 if a[mid] <= target <= a[hi]:
-                    lo += 1
+                    lo = mid + 1
                 else:
-                    hi -= 1
+                    hi = mid - 1
         return -1
 
     def findMin(self, a: List[int]) -> int:
         # min in rotated sorted
         lo, hi = 0, len(a) - 1
-        ans = float("inf")
         while lo < hi:
             mid = lo + (hi - lo) // 2
             if a[mid] < a[hi]:
@@ -36,6 +35,7 @@ class Solution:
     def minEatingSpeed(self, piles: List[int], h: int) -> int:
         def can_finish(speed):
             return h >= sum(math.ceil(x / speed) for x in piles)
+
         lo = 1
         hi = max(piles)
         while lo <= hi:
