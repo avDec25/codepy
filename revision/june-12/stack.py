@@ -3,13 +3,13 @@ from typing import List
 
 class Solution:
     def dailyTemperatures(self, temperatures: List[int]) -> List[int]:
-        ans = []
-        stk = [float("-inf")]
-        for temp in temperatures:
-            while stk and stk[-1] < temp:
-                stk.pop()
-            ans.append(len(stk))
-            stk.append(temp)
+        ans = [0] * len(temperatures)
+        stk = []
+        for i in range(len(temperatures)):
+            while stk and temperatures[i] > temperatures[stk[-1]]:
+                index = stk.pop()
+                ans[index] = i - index
+            stk.append(i)
         return ans
 
 
