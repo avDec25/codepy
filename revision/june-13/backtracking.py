@@ -42,16 +42,65 @@ class Solution:
         return ans
 
     def combinationSum(self, candidates: List[int], target: int) -> List[List[int]]:
+        ans = []
+
+        def backtrack(path, index, k):
+            if k < 0:
+                return
+            if k == 0:
+                ans.append(path.copy())
+                return
+
+            for i in range(index, len(candidates)):
+                path.append(candidates[i])
+                backtrack(path, i, k - candidates[i])
+                path.pop()
+
+        backtrack([], 0, target)
+        return ans
+
+    def solveNQueens(self, n: int) -> List[List[str]]:
+        ans = list()
+        board = [['.'] * n for _ in range(n)]
+
+        # > sweep will cover all cells behind
+        def isSafe(r, c):
+            for j in range(c, -1, -1):
+                if board[r][j] == 'Q':
+                    return False
+
+            i = r - 1
+            j = c - 1
+            while i >= 0 and j >= 0:
+                if board[i][j] == 'Q':
+                    return False
+                i -= 1
+                j -= 1
+
+            i = r + 1
+            j = c - 1
+            while i < n and j >= 0:
+                if board[i][j] == 'Q':
+                    return False
+                i += 1
+                j -= 1
+
+            return True
+
+        def backtrack(col):
+            if col >= n:
+                ans.append(["".join(c) for c in board])
+                return
+
+            for row in range(n):
+                if isSafe(row, col):
+                    board[row][col] = 'Q'
+                    backtrack(col + 1)
+                    board[row][col] = '.'
+
+        backtrack(0)
+        return ans
 
 
-candidates = [2, 3, 6, 7]
-target = 7
-print(Solution().combinationSum(candidates, target))
-
-candidates = [2, 3, 5]
-target = 8
-print(Solution().combinationSum(candidates, target))
-
-candidates = [2]
-target = 1
-print(Solution().combinationSum(candidates, target))
+n = 4
+print(Solution().solveNQueens(n))
