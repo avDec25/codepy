@@ -60,26 +60,25 @@ class Solution:
         return ans
 
     def solveNQueens(self, n: int) -> List[List[str]]:
-        ans = list()
-        board = [['.'] * n for _ in range(n)]
+        ans = []
+        board = [['.' for _ in range(n)] for _ in range(n)]
 
-        # > sweep will cover all cells behind
-        def isSafe(r, c):
-            for j in range(c, -1, -1):
+        def is_safe(r, c):
+            for j in range(c-1, -1, -1):
                 if board[r][j] == 'Q':
                     return False
 
-            i = r - 1
-            j = c - 1
-            while i >= 0 and j >= 0:
+            i = r-1
+            j = c-1
+            while 0 <= i and 0 <= j:
                 if board[i][j] == 'Q':
                     return False
                 i -= 1
                 j -= 1
 
-            i = r + 1
-            j = c - 1
-            while i < n and j >= 0:
+            i = r+1
+            j = c-1
+            while i < n and 0 <= j:
                 if board[i][j] == 'Q':
                     return False
                 i += 1
@@ -89,14 +88,14 @@ class Solution:
 
         def backtrack(col):
             if col >= n:
-                ans.append(["".join(c) for c in board])
+                ans.append(["".join(row) for row in board])
                 return
 
-            for row in range(n):
-                if isSafe(row, col):
-                    board[row][col] = 'Q'
+            for i in range(n):
+                if is_safe(i, col):
+                    board[i][col] = 'Q'
                     backtrack(col + 1)
-                    board[row][col] = '.'
+                    board[i][col] = '.'
 
         backtrack(0)
         return ans
