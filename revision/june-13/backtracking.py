@@ -101,35 +101,48 @@ class Solution:
         return ans
 
     def solveSudoku(self, board: List[List[str]]) -> None:
-        row = len(board)
-        col = len(board[0])
-
-        if board is None or row == 0 or col == 0:
+        rows = len(board)
+        cols = len(board[0])
+        if not board or rows == 0 or cols == 0:
             return
 
-        def is_valid(r, c, x):
+        def inRow(num, r, c):
             for i in range(9):
-                if board[i][c] == x:
-                    return False
-                if board[r][i] == x:
-                    return False
-                if board[3*(r // 3) + i // 3][3*(c // 3) + i % 3] == x:
-                    return False
-            return True
+                if board[i][c] == num:
+                    return True
+            return False
 
-        def solve(board):
+        def inCol(num, r, c):
             for i in range(9):
-                for j in range(9):
-                    if board[i][j] == '.':
-                        for x in ['1', '2', '3', '4', '5', '6', '7', '8', '9']:
-                            if is_valid(i, j, x):
-                                board[i][j] = x
-                                if solve(board): return True
-                                board[i][j] = '.'
-                        return False
-            return True
+                if board[r][i] == num:
+                    return True
+            return False
 
-        solve(board)
+        def inBox(num, r, c):
+            for i in range(3 * (r // 3), 3 * (r // 3) + 3):
+                for j in range(3 * (c // 3), 3 * (c // 3) + 3):
+                    if board[i][j] == num:
+                        return True
+            return False
+
+        def backtrack(r, c):
+            if c == cols:
+                c = 0
+                r += 1
+            if r == rows:
+                return True
+
+            if board[r][c] == '.':
+                for num in ['1', '2', '3', '4', '5', '6', '7', '8', '9']:
+                    if not inRow(num, r, c) and not inCol(num, r, c) and not inBox(num, r, c):
+                        board[r][c] = num
+                        if backtrack(r, c + 1):
+                            return True
+                        board[r][c] = '.'
+            else:
+                return backtrack(r, c + 1)
+
+        backtrack(0, 0)
 
 
 board = [["5", "3", ".", ".", "7", ".", ".", ".", "."],
