@@ -107,25 +107,25 @@ class Solution:
         if board is None or row == 0 or col == 0:
             return
 
-        def isValid(r, c, x):
+        def is_valid(r, c, x):
             for i in range(9):
-                if board[r][i] == x:
-                    return False
                 if board[i][c] == x:
                     return False
-                if board[3 * (r // 3) + i // 3][3 * (c // 3) + i % 3] == x:
+                if board[r][i] == x:
+                    return False
+                if board[3*(r // 3) + i // 3][3*(c // 3) + i % 3] == x:
                     return False
             return True
 
         def solve(board):
-            for r in range(9):
-                for c in range(9):
-                    if board[r][c] == '.':
+            for i in range(9):
+                for j in range(9):
+                    if board[i][j] == '.':
                         for x in ['1', '2', '3', '4', '5', '6', '7', '8', '9']:
-                            if isValid(r, c, x):
-                                board[r][c] = x
+                            if is_valid(i, j, x):
+                                board[i][j] = x
                                 if solve(board): return True
-                                board[r][c] = '.'
+                                board[i][j] = '.'
                         return False
             return True
 
